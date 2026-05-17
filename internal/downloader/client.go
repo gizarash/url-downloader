@@ -1,6 +1,7 @@
 package downloader
 
 import (
+	"io"
 	"net/http"
 	"time"
 )
@@ -18,11 +19,16 @@ func NewHTTPClient(timeout int) *HTTPClient {
 }
 
 func (c *HTTPClient) Fetch(url string) (int, int, error) {
-	// TODO:
-	// 1. сделать GET запрос
-	// 2. обработать ошибку
-	// 3. не забыть закрыть body
-	// 4. посчитать размер ответа
+	resp, err := c.client.Get(url)
+	if err != nil {
+		return 0, 0, err
+	}
+	defer resp.Body.Close()
 
-	return 0, 0, nil
+	size, err := io.Copy(io.Discard, resp.Body)
+	if err != nil {
+		return 0, 0, err
+	}
+
+	return resp.StatusCode, int(size), nil
 }

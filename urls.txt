@@ -1,0 +1,4 @@
+https://google.com
+https://example.com
+https://ya.ru
+https://badsite.com

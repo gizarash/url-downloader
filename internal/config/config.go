@@ -28,10 +28,6 @@ func MustLoad() Config {
 }
 
 func LoadURLs(cfg Config) ([]string, error) {
-	// TODO:
-	// если есть cfg.File → читать из файла
-	// иначе → брать из cfg.URLs
-
 	if cfg.File == "" {
 		return cfg.URLs, nil
 	}

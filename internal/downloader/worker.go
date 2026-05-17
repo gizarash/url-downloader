@@ -15,14 +15,14 @@ func worker(
 	for job := range jobs {
 		start := time.Now()
 
-		// TODO:
-		// вызвать client.Fetch
-		// обработать ошибку
+		statusCode, contentLenght, err := client.Fetch(job.URL)
 
 		res := model.Result{
-			URL: job.URL,
-			// TODO: заполнить поля
-			Duration: time.Since(start),
+			URL:        job.URL,
+			StatusCode: statusCode,
+			Size:       contentLenght,
+			Duration:   time.Since(start),
+			Err:        err,
 		}
 
 		results <- res
